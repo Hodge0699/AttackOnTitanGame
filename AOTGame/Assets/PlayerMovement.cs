@@ -4,24 +4,40 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 18;
+    public float speed = 10;
+    public float Sprinting = 15;
+    public CharacterController controller;
 
-    private Rigidbody rig;
+    private Vector3 moveDirection;
+    public float gravityScale;
+    public float jumpForce;
 
     void Start()
     {
-        rig = GetComponent<Rigidbody>();     
+        controller = GetComponent<CharacterController>();     
     }
 
     void Update()
     {
-        float hAixs = Input.GetAxis("Horizontal");
-        float vAixs = Input.GetAxis("Vertical");
+        float yStore = moveDirection.y;
+        //moveDirection = new Vector3 (Input.GetAxis("Horizontal") * speed, 0f,  Input.GetAxis("Vertical") * speed);
+        moveDirection = (transform.forward * Input.GetAxisRaw("Vertical")) + (transform.right * Input.GetAxisRaw("Horizontal")); 
+        moveDirection = moveDirection.normalized * speed;
+        moveDirection.y = yStore;
+        if(controller.isGrounded)
+        {
+            moveDirection.y = 0f;
+            if(Input.GetButtonDown("Jump"))
+            {
+                moveDirection.y = jumpForce;
+            }
+        }
+        moveDirection.y = moveDirection.y + (Physics.gravity.y * gravityScale * Time.deltaTime);
+        controller.Move(moveDirection * Time.deltaTime);
 
-
-        Vector3 movement = new Vector3(hAixs, 0, vAixs) * speed * Time.deltaTime;
-
-
-        rig.MovePosition(transform.position + movement);
+        //if(Input.GetKeyDown(KeyCode.LeftShift))
+        //{
+        //    Sprinting = 15;
+        //}
     }
 }
