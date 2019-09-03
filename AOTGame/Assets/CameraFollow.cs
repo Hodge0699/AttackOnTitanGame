@@ -33,14 +33,14 @@ public class CameraFollow : MonoBehaviour {
         float vertical = Input.GetAxis("Mouse Y") * rotateSpeed;
         pivot.Rotate(vertical, 0, 0);
 
-        if(pivot.rotation.eulerAngles.x > 45f && pivot.rotation.eulerAngles.x <180f)
-        {
-            pivot.rotation = Quaternion.Euler(45f, 0, 0);
-        }
-        if (pivot.rotation.eulerAngles.x > 180 && pivot.rotation.eulerAngles.x < 315f)
-        {
-            pivot.rotation = Quaternion.Euler(315f, 0, 0);
-        }
+        //if(pivot.rotation.eulerAngles.x > 0f && pivot.rotation.eulerAngles.x <0f)
+        //{
+        //    pivot.rotation = Quaternion.Euler(0f, 0, 0);
+        //}
+        //if (pivot.rotation.eulerAngles.x > 0 && pivot.rotation.eulerAngles.x < 0f)
+        //{
+        //    pivot.rotation = Quaternion.Euler(0f, 0, 0);
+        //}
 
         float desiredYAngle = target.eulerAngles.y;
         float desiredXAngle = pivot.eulerAngles.x;
